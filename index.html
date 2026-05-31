@@ -8,18 +8,13 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-height:100vh}
-
-/* HEADER */
-.hdr{background:#2A1A0A;padding:28px 40px 24px;overflow:hidden;position:relative}
-.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(200,82,42,.05) 20px,rgba(200,82,42,.05) 21px)}
+.hdr{background:#2A1A0A;padding:28px 40px 24px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0,transparent 20px,rgba(200,82,42,.05) 20px,rgba(200,82,42,.05) 21px)}
 .hdr-inner{max-width:1100px;margin:0 auto;position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .hdr-title{font-family:'Playfair Display',serif;font-size:36px;color:#FDF7EF;line-height:1.1}
 .hdr-sub{font-size:12px;color:#C8522A;letter-spacing:2px;text-transform:uppercase;margin-top:6px;font-style:italic}
-.btn-admin{background:transparent;border:1.5px solid rgba(200,82,42,.5);color:#C8522A;padding:8px 18px;font-family:'Lora',serif;font-size:13px;cursor:pointer;letter-spacing:1px;transition:all .2s;border-radius:2px}
-.btn-admin:hover{background:rgba(200,82,42,.1);border-color:#C8522A}
-.btn-admin.on{background:#C8522A;color:#FDF7EF;border-color:#C8522A}
-
-/* MONTH NAV */
+.btn-adm{background:transparent;border:1.5px solid rgba(200,82,42,.5);color:#C8522A;padding:8px 18px;font-family:'Lora',serif;font-size:13px;cursor:pointer;letter-spacing:1px;transition:all .2s;border-radius:2px}
+.btn-adm:hover,.btn-adm.on{background:#C8522A;color:#FDF7EF;border-color:#C8522A}
 .mnav{background:#FFFAF3;border-bottom:1.5px solid #E8D8C0;padding:0 40px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(42,26,10,.06)}
 .mnav-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
 .mnav-inner::-webkit-scrollbar{display:none}
@@ -28,14 +23,10 @@ body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-heigh
 .mtab:hover{color:#2A1A0A}
 .mtab.on{color:#C8522A;font-weight:600}
 .mtab.on::after{transform:scaleX(1)}
-
-/* MAIN */
 .main{max-width:1100px;margin:0 auto;padding:40px 40px 80px}
 .m-heading{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:6px}
 .m-count{font-size:13px;color:#9A7A5A;font-style:italic;margin-bottom:28px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
-
-/* CARDS */
 .card{background:#FFFAF3;border:1.5px solid #E8D8C0;border-radius:4px;padding:22px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#C8522A,#E8943A);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(42,26,10,.1);border-color:#C8522A}
@@ -46,8 +37,6 @@ body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-heigh
 .card-desc{font-size:13px;color:#7A5A3A;font-style:italic;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .badges{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
 .badge{font-size:11px;padding:2px 8px;background:#F0E8D8;border-radius:10px;color:#6A4A2A}
-
-/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(42,26,10,.8);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:30px 20px;overflow-y:auto;backdrop-filter:blur(5px)}
 .modal{background:#FDF7EF;width:100%;max-width:860px;border-radius:6px;animation:up .3s ease;margin-bottom:40px}
 @keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -55,96 +44,66 @@ body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-heigh
 .modal-ava{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C8522A;flex-shrink:0}
 .modal-ava-ph{width:60px;height:60px;border-radius:50%;background:rgba(200,82,42,.2);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:#C8522A;flex-shrink:0}
 .modal-name{font-family:'Playfair Display',serif;font-size:24px;color:#FDF7EF;flex:1}
-.btn-close{background:none;border:none;color:#9A7A5A;font-size:28px;cursor:pointer;line-height:1;padding:0 4px;transition:color .2s;flex-shrink:0}
-.btn-close:hover{color:#FDF7EF}
+.btn-x{background:none;border:none;color:#9A7A5A;font-size:28px;cursor:pointer;line-height:1;padding:0 4px;transition:color .2s;flex-shrink:0}
+.btn-x:hover{color:#FDF7EF}
 .modal-body{padding:28px 32px}
 .sec{margin-bottom:32px}
-.sec-title{font-family:'Playfair Display',serif;font-size:15px;color:#C8522A;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #E8D8C0;letter-spacing:.5px}
+.sec-t{font-family:'Playfair Display',serif;font-size:15px;color:#C8522A;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #E8D8C0}
 .modal-desc{font-size:15px;color:#3A2A1A;line-height:1.9;font-style:italic;white-space:pre-wrap}
-
-/* VIDEO SECTION */
-.video-list{display:flex;flex-direction:column;gap:18px}
-.video-wrap{border-radius:6px;overflow:hidden;background:#1A1A1A;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-.video-cap{font-size:13px;padding:8px 12px;color:#FDF7EF;background:#2A2A2A;font-family:'Lora',serif}
-.video-wrap video,.video-wrap iframe{width:100%;display:block;aspect-ratio:16/9;height:auto;border:none}
-
-/* AUDIO SECTION */
-.audio-list{display:flex;flex-direction:column;gap:12px}
-.audio-card{background:#2A1A0A;border-radius:6px;padding:16px 18px;display:flex;align-items:center;gap:14px}
-.audio-icon{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#C8522A,#E8943A);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.audio-info{flex:1;min-width:0}
-.audio-title{font-family:'Lora',serif;font-size:14px;color:#FDF7EF;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.audio-card audio{width:100%;height:32px;display:block}
-.audio-card audio::-webkit-media-controls-panel{background:#1A0E05}
-
-/* IMAGE GALLERY */
-.img-gallery{columns:2;gap:10px}
-.img-gallery img{width:100%;display:block;margin-bottom:10px;border-radius:4px;cursor:pointer;transition:opacity .2s}
-.img-gallery img:hover{opacity:.9}
-@media(min-width:600px){.img-gallery{columns:3}}
-
-/* DOCS */
-.docs-list{display:flex;flex-direction:column;gap:8px}
+.vid-list{display:flex;flex-direction:column;gap:18px}
+.vid-wrap{border-radius:6px;overflow:hidden;background:#111;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.vid-cap{font-size:13px;padding:8px 12px;color:#eee;background:#222;font-family:'Lora',serif}
+.vid-wrap video,.vid-wrap iframe{width:100%;display:block;aspect-ratio:16/9;border:none}
+.aud-list{display:flex;flex-direction:column;gap:10px}
+.aud-card{background:#2A1A0A;border-radius:6px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.aud-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C8522A,#E8943A);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.aud-info{flex:1;min-width:0}
+.aud-title{font-family:'Lora',serif;font-size:13px;color:#FDF7EF;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aud-card audio{width:100%;height:32px;display:block}
+.img-gal{columns:2 180px;gap:8px}
+.img-gal img{width:100%;display:block;margin-bottom:8px;border-radius:4px;cursor:pointer;transition:opacity .2s}
+.img-gal img:hover{opacity:.85}
+.doc-list{display:flex;flex-direction:column;gap:8px}
 .doc-link{display:flex;align-items:center;gap:12px;padding:13px 16px;text-decoration:none;color:#C8522A;background:#FFFAF3;border:1px solid #E8D8C0;border-radius:4px;transition:all .15s;font-family:'Lora',serif}
 .doc-link:hover{background:#F0E8D8;border-color:#C8522A;transform:translateX(3px)}
-.doc-icon{font-size:20px;flex-shrink:0}
-.doc-name{font-size:14px;word-break:break-all}
-
-/* LIGHTBOX */
-.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.doc-ic{font-size:20px;flex-shrink:0}
+.doc-nm{font-size:14px;word-break:break-all}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:300;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .lb img{max-width:95vw;max-height:92vh;object-fit:contain;border-radius:3px}
-.lb-close{position:absolute;top:16px;right:20px;color:#FFF;font-size:32px;cursor:pointer;background:none;border:none;line-height:1}
-
-/* ADMIN DRAWER */
+.lb-x{position:absolute;top:14px;right:18px;color:#fff;font-size:32px;cursor:pointer;background:none;border:none;line-height:1}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:440px;background:#1A0E05;z-index:200;overflow-y:auto;box-shadow:-4px 0 28px rgba(0,0,0,.5);animation:sin .3s ease}
 @keyframes sin{from{transform:translateX(100%)}to{transform:translateX(0)}}
-.drawer-hdr{padding:18px 22px;background:#0A0500;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,82,42,.2);position:sticky;top:0;z-index:1}
-.drawer-title{font-family:'Playfair Display',serif;color:#C8522A;font-size:17px}
-.drawer-body{padding:18px 22px}
+.dr-hdr{padding:18px 22px;background:#0A0500;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,82,42,.2);position:sticky;top:0;z-index:1}
+.dr-title{font-family:'Playfair Display',serif;color:#C8522A;font-size:17px}
+.dr-body{padding:18px 22px}
 .atabs{display:flex;gap:3px;margin-bottom:18px;background:#0A0500;padding:3px;border-radius:4px}
 .atab{flex:1;padding:7px 4px;background:none;border:none;color:#7A5A3A;font-size:12px;cursor:pointer;border-radius:3px;transition:all .2s;font-family:'Lora',serif}
 .atab.on{background:#C8522A;color:#FDF7EF}
 .fl{margin-bottom:11px}
 .fl label{display:block;font-size:11px;color:#9A7A5A;margin-bottom:4px;letter-spacing:.8px;text-transform:uppercase;font-family:'Lora',serif}
-.fi,.fs,.ft{width:100%;background:#0A0500;border:1px solid #3A2A1A;color:#DDD0C0;padding:8px 11px;font-family:'Lora',serif;font-size:13px;border-radius:3px;outline:none;transition:border-color .2s}
-.fi:focus,.fs:focus,.ft:focus{border-color:#C8522A}
-.ft{resize:vertical;min-height:70px}
+.fi,.fs,.fta{width:100%;background:#0A0500;border:1px solid #3A2A1A;color:#DDD0C0;padding:8px 11px;font-family:'Lora',serif;font-size:13px;border-radius:3px;outline:none;transition:border-color .2s}
+.fi:focus,.fs:focus,.fta:focus{border-color:#C8522A}
+.fta{resize:vertical;min-height:70px}
 .fs option{background:#1A0E05}
 .bp{background:#C8522A;border:none;color:#FDF7EF;padding:9px 18px;font-family:'Lora',serif;font-size:13px;cursor:pointer;border-radius:3px;width:100%;transition:background .2s;margin-top:3px}
 .bp:hover{background:#A84020}
-.bp-sm{background:#3A2A1A;border:1px solid #5A3A2A;color:#DDD0C0;padding:5px 10px;font-size:12px;cursor:pointer;border-radius:3px;font-family:'Lora',serif;transition:all .2s;white-space:nowrap}
-.bp-sm:hover{background:#5A3A2A}
 .bp-add{background:transparent;border:1px dashed rgba(200,82,42,.5);color:#C8522A;padding:7px 14px;font-size:12px;cursor:pointer;border-radius:3px;font-family:'Lora',serif;transition:all .2s;width:100%;margin-top:6px}
-.bp-add:hover{background:rgba(200,82,42,.1);border-style:solid}
+.bp-add:hover{background:rgba(200,82,42,.1)}
 .bd{background:#5A1A0A;border:none;color:#FFAA88;padding:4px 9px;font-size:11px;cursor:pointer;border-radius:2px;font-family:'Lora',serif}
 .bd:hover{background:#8A2A1A}
 .ali{background:#0A0500;border:1px solid #3A2A1A;border-radius:3px;padding:8px 11px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.ali-name{font-size:12px;color:#DDD0C0;font-family:'Lora',serif;flex:1;word-break:break-all}
+.ali-nm{font-size:12px;color:#DDD0C0;font-family:'Lora',serif;flex:1;word-break:break-all}
 .dvd{height:1px;background:rgba(200,82,42,.2);margin:16px 0}
 .smsg{background:rgba(80,160,80,.15);border:1px solid rgba(80,160,80,.3);color:#80C080;padding:7px 11px;font-size:12px;border-radius:3px;margin-bottom:10px;font-family:'Lora',serif}
 .emsg{background:rgba(200,82,42,.1);border:1px solid rgba(200,82,42,.3);color:#C8522A;padding:7px 11px;font-size:12px;border-radius:3px;margin-bottom:10px;font-family:'Lora',serif}
 .empty{text-align:center;padding:70px 20px;color:#9A7A5A;font-family:'Playfair Display',serif;font-size:17px;font-style:italic}
 .empty p{margin-top:8px;font-size:13px;font-family:'Lora',serif}
-.pw-box{padding:36px 28px;text-align:center}
-.pw-box h3{font-family:'Playfair Display',serif;color:#C8522A;font-size:18px;margin-bottom:18px}
-.hint{font-size:11px;color:#5A4A3A;margin-top:10px;font-style:italic;font-family:'Lora',serif;line-height:1.6}
-.sec-add-title{color:#C8522A;font-size:13px;margin-bottom:10px;font-family:'Playfair Display',serif}
-
-/* FILE ROWS */
-.frow{background:#0A0500;border:1px solid #2A1A0A;border-radius:4px;padding:10px;margin-bottom:8px;position:relative}
-.frow-del{position:absolute;top:6px;right:6px;background:none;border:none;color:#5A3A2A;font-size:16px;cursor:pointer;line-height:1;padding:2px 4px}
-.frow-del:hover{color:#C8522A}
+.frow{background:#0A0500;border:1px solid #2A1A0A;border-radius:4px;padding:10px 10px 10px 10px;margin-bottom:8px;position:relative}
+.frow-x{position:absolute;top:6px;right:6px;background:none;border:none;color:#5A3A2A;font-size:16px;cursor:pointer;line-height:1;padding:0 4px}
+.frow-x:hover{color:#C8522A}
 .frow .fi,.frow .fs{margin-bottom:6px}
-.frow .fi:last-child,.frow .fs:last-child{margin-bottom:0}
-
-/* BATCH PASTE */
-.batch-area{background:#0A0500;border:1px solid #3A2A1A;color:#DDD0C0;padding:8px 11px;font-family:'Lora',serif;font-size:12px;border-radius:3px;outline:none;width:100%;resize:vertical;min-height:80px;transition:border-color .2s}
-.batch-area:focus{border-color:#C8522A}
-
-/* LOADING */
-.loading-dot::after{content:'';animation:dots 1.2s steps(3,end) infinite}
-@keyframes dots{0%,100%{content:''}33%{content:'.'}66%{content:'..'}100%{content:'...'}}
-
+.hint{font-size:11px;color:#5A4A3A;margin-top:10px;font-style:italic;font-family:'Lora',serif;line-height:1.6}
+.sec-h{color:#C8522A;font-size:13px;margin-bottom:10px;font-family:'Playfair Display',serif}
 @media(max-width:640px){
   .hdr{padding:18px 16px 14px}
   .hdr-title{font-size:24px}
@@ -154,478 +113,484 @@ body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-heigh
   .drawer{width:100%}
   .overlay{padding:0}
   .modal{border-radius:0;margin-bottom:0}
-  .img-gallery{columns:2}
 }
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div id="lb" style="display:none" class="lb" onclick="closeLb()">
+  <button class="lb-x" onclick="closeLb()">×</button>
+  <img id="lb-img" src="" alt="">
+</div>
 
 <script>
-const SK='bchdt-bonuses-v3';
-const MM={january:'Январь',february:'Февраль',march:'Март',april:'Апрель',may:'Май',june:'Июнь',july:'Июль',august:'Август',september:'Сентябрь',october:'Октябрь',november:'Ноябрь',december:'Декабрь'};
-const DEF={settings:{title:'Бонусы авторов',subtitle:'Клан читателей журнала БЧДТ',adminPassword:'bchdt2025'},months:{may:{id:'may',name:'Май',order:1,authors:{}}}};
+var SK = 'bchdt-v4';
+var MM = {january:'Январь',february:'Февраль',march:'Март',april:'Апрель',may:'Май',june:'Июнь',july:'Июль',august:'Август',september:'Сентябрь',october:'Октябрь',november:'Ноябрь',december:'Декабрь'};
+var FT = {auto:'Авто',youtube:'YouTube',video:'Видео (.mp4)',audio:'Аудио (.mp3)',image:'Изображение',pdf:'PDF',document:'Документ',yandex:'Яндекс Диск',link:'Ссылка'};
+var DEF = {settings:{title:'Бонусы авторов',subtitle:'Клан читателей журнала БЧДТ',pw:'bchdt2025'},months:{may:{id:'may',name:'Май',order:1,authors:{}}}};
 
-let D=null;
-let S={monthId:null,authorId:null,adminOpen:false,adminTab:'authors',adminAuthed:false,_aMid:null,_fMid:null,_fAid:null,lbImg:null};
-// Multiple file rows state
-let newFileRows=[{url:'',title:'',type:'auto'}];
+var D = null;
+var S = {mid:null,aid:null,adm:false,atab:'authors',authed:false,fmid:null,faid:null,amid:null};
+var ROWS = [{url:'',title:'',type:'auto'}];
 
-/* ---- UTILS ---- */
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+function uid(){return 'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+
 function getType(url,manual){
-  if(manual&&manual!=='auto')return manual;
-  const u=url||'';
-  const ext=u.split('?')[0].split('.').pop().toLowerCase();
-  if(['mp4','webm','mov','avi','mkv'].includes(ext))return'video';
-  if(['mp3','wav','ogg','m4a','flac','aac'].includes(ext))return'audio';
-  if(['jpg','jpeg','png','gif','webp','svg'].includes(ext))return'image';
-  if(ext==='pdf')return'pdf';
-  if(['doc','docx'].includes(ext))return'document';
+  if(manual&&manual!='auto')return manual;
+  var u=String(url||'');
+  var ext=u.split('?')[0].split('.').pop().toLowerCase();
+  if(['mp4','webm','mov','avi'].indexOf(ext)>=0)return'video';
+  if(['mp3','wav','ogg','m4a','flac'].indexOf(ext)>=0)return'audio';
+  if(['jpg','jpeg','png','gif','webp','svg'].indexOf(ext)>=0)return'image';
+  if(ext=='pdf')return'pdf';
+  if(['doc','docx'].indexOf(ext)>=0)return'document';
   if(u.match(/youtu/))return'youtube';
-  if(u.includes('disk.yandex'))return'yandex';
-  if(u.includes('drive.google'))return'gdrive';
+  if(u.indexOf('disk.yandex')>=0)return'yandex';
+  if(u.indexOf('drive.google')>=0)return'gdrive';
   return'link';
 }
-function ytId(url){const m=(url||'').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);return m?m[1]:null;}
-function e(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function gv(id){return(document.getElementById(id)||{}).value||'';}
-function uid(){return'a'+Date.now()+Math.random().toString(36).slice(2,7);}
-function sortMonths(){return Object.values(D.months).sort((a,b)=>a.order-b.order);}
-function sortAuthors(mid){return Object.values((D.months[mid]||{}).authors||{}).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));}
+function ytid(url){var m=String(url||'').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);return m?m[1]:null;}
 
-/* ---- DATA ---- */
+function sortMonths(){return Object.values(D.months).sort(function(a,b){return a.order-b.order;});}
+function sortAuthors(mid){
+  var m=D.months[mid];
+  if(!m)return[];
+  return Object.values(m.authors||{}).sort(function(a,b){return(a.createdAt||0)-(b.createdAt||0);});
+}
+
 function load(){
-  try{const r=localStorage.getItem(SK);D=r?JSON.parse(r):JSON.parse(JSON.stringify(DEF));}
-  catch(e){D=JSON.parse(JSON.stringify(DEF));}
-  const ms=sortMonths();
-  S.monthId=ms[0]?.id||null;
-  S._aMid=S.monthId;
-  S._fMid=S.monthId;
-}
-function save(){localStorage.setItem(SK,JSON.stringify(D));}
-
-/* ---- YANDEX DISK API ---- */
-async function resolveYandex(url){
   try{
-    const api='https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key='+encodeURIComponent(url);
-    const r=await fetch(api);
-    if(!r.ok)return null;
-    const d=await r.json();
-    return d.href||null;
-  }catch(err){return null;}
+    var raw=localStorage.getItem(SK);
+    D=raw?JSON.parse(raw):JSON.parse(JSON.stringify(DEF));
+  }catch(e){D=JSON.parse(JSON.stringify(DEF));}
+  var ms=sortMonths();
+  S.mid=ms.length?ms[0].id:null;
+  S.amid=S.mid;
+  S.fmid=S.mid;
 }
+function save(){try{localStorage.setItem(SK,JSON.stringify(D));}catch(e){}}
 
-/* ---- RENDER ---- */
 function render(){
-  document.getElementById('app').innerHTML=
-    rHeader()+rMonthNav()+'<div class="main">'+rMain()+'</div>'+
-    (S.authorId?rModal():'')+
-    (S.lbImg?`<div class="lb" onclick="S.lbImg=null;render()"><button class="lb-close">×</button><img src="${e(S.lbImg)}"></div>`:'')+
-    (S.adminOpen?rAdmin():'');
-  document.onkeydown=ev=>{
-    if(ev.key==='Escape'){
-      if(S.lbImg){S.lbImg=null;render();}
-      else if(S.authorId){S.authorId=null;render();}
-      else if(S.adminOpen){S.adminOpen=false;render();}
-    }
-  };
+  try{
+    var html='';
+    html+=renderHeader();
+    html+=renderNav();
+    html+='<div class="main">'+renderMain()+'</div>';
+    if(S.aid)html+=renderModal();
+    if(S.adm)html+=renderAdmin();
+    document.getElementById('app').innerHTML=html;
+  }catch(e){
+    document.getElementById('app').innerHTML='<div style="padding:40px;color:red;font-family:monospace">Ошибка: '+e.message+'</div>';
+    console.error(e);
+  }
 }
 
-function rHeader(){
-  return`<header class="hdr"><div class="hdr-inner"><div>
-    <div class="hdr-title">${e(D.settings.title)}</div>
-    <div class="hdr-sub">${e(D.settings.subtitle)}</div>
-    </div>
-    <button class="btn-admin${S.adminOpen?' on':''}" onclick="toggleAdmin()">${S.adminOpen?'✕ Закрыть':'⚙ Управление'}</button>
-  </div></header>`;
+function renderHeader(){
+  return '<header class="hdr"><div class="hdr-inner"><div>'+
+    '<div class="hdr-title">'+esc(D.settings.title)+'</div>'+
+    '<div class="hdr-sub">'+esc(D.settings.subtitle)+'</div>'+
+    '</div><button class="btn-adm'+(S.adm?' on':'')+'" onclick="toggleAdm()">'+
+    (S.adm?'✕ Закрыть':'⚙ Управление')+'</button></div></header>';
 }
 
-function rMonthNav(){
-  const ms=sortMonths();
+function renderNav(){
+  var ms=sortMonths();
   if(!ms.length)return'';
-  return`<nav class="mnav"><div class="mnav-inner">
-    ${ms.map(m=>`<button class="mtab${S.monthId===m.id?' on':''}" onclick="setMonth('${m.id}')">${e(m.name)}</button>`).join('')}
-  </div></nav>`;
+  var tabs=ms.map(function(m){
+    return '<button class="mtab'+(S.mid==m.id?' on':'')+'" onclick="setMonth(\''+esc(m.id)+'\')">'+esc(m.name)+'</button>';
+  }).join('');
+  return'<nav class="mnav"><div class="mnav-inner">'+tabs+'</div></nav>';
 }
 
-function rMain(){
-  const m=D.months[S.monthId];
-  if(!m)return`<div class="empty">Добавьте первый месяц через панель управления</div>`;
-  const au=sortAuthors(S.monthId);
-  const c=au.length;
-  const cs=c===0?'Авторы ещё не добавлены':`${c} ${c===1?'автор':c<5?'автора':'авторов'}`;
-  return`<h2 class="m-heading">Бонусы — ${e(m.name)}</h2>
-    <p class="m-count">${cs}</p>
-    ${c?`<div class="grid">${au.map(rCard).join('')}</div>`
-    :`<div class="empty">Авторы ещё не добавлены<p>Откройте панель управления и добавьте первого автора</p></div>`}`;
+function renderMain(){
+  var m=D.months[S.mid];
+  if(!m)return'<div class="empty">Добавьте первый месяц через панель управления</div>';
+  var au=sortAuthors(S.mid);
+  var cnt=au.length;
+  var cs=cnt==0?'Авторы ещё не добавлены':cnt+' '+(cnt==1?'автор':cnt<5?'автора':'авторов');
+  var cards=cnt?('<div class="grid">'+au.map(renderCard).join('')+'</div>'):
+    '<div class="empty">Авторы ещё не добавлены<p>Откройте панель управления</p></div>';
+  return'<h2 class="m-heading">Бонусы — '+esc(m.name)+'</h2><p class="m-count">'+cs+'</p>'+cards;
 }
 
-function fileBadges(a){
-  const f=a.files||[];
-  const types=new Set(f.map(fi=>{const t=getType(fi.url,fi.type);return['youtube','video'].includes(t)?'видео':t==='audio'?'аудио':t==='image'?'фото':'файл';}));
-  let b=[...types].map(t=>`<span class="badge">${t}</span>`).join('');
-  if(f.length)b+=`<span class="badge">${f.length} шт.</span>`;
-  return b;
-}
-
-function rCard(a){
-  const av=a.avatar?`<img src="${e(a.avatar)}" class="card-ava" onerror="this.style.display='none'">`
-    :`<div class="card-ava-ph">${e((a.name||'А')[0])}</div>`;
-  return`<div class="card" onclick="openAuthor('${a.id}')">
-    ${av}
-    <div class="card-name">${e(a.name)}</div>
-    ${a.description?`<div class="card-desc">${e(a.description)}</div>`:''}
-    <div class="badges">${fileBadges(a)}</div>
-  </div>`;
-}
-
-/* ---- MODAL ---- */
-function rModal(){
-  const mid=Object.keys(D.months).find(id=>D.months[id].authors[S.authorId]);
-  if(!mid)return'';
-  const a=D.months[mid].authors[S.authorId];
-  const files=a.files||[];
-  const g={video:[],audio:[],image:[],docs:[]};
-  files.forEach(f=>{
-    const t=getType(f.url,f.type);
-    const k=['youtube','video'].includes(t)?'video':t==='audio'?'audio':t==='image'?'image':'docs';
-    g[k].push(f);
+function renderCard(a){
+  var av=a.avatar?
+    '<img src="'+esc(a.avatar)+'" class="card-ava" onerror="this.style.display=\'none\'">':
+    '<div class="card-ava-ph">'+esc((a.name||'А')[0])+'</div>';
+  var files=a.files||[];
+  var types={};
+  files.forEach(function(f){
+    var t=getType(f.url,f.type);
+    var g=['youtube','video'].indexOf(t)>=0?'видео':t=='audio'?'аудио':t=='image'?'фото':'файл';
+    types[g]=1;
   });
-  const av=a.avatar?`<img src="${e(a.avatar)}" class="modal-ava" onerror="this.style.display='none'">`
-    :`<div class="modal-ava-ph">${e((a.name||'А')[0])}</div>`;
-  return`<div class="overlay" id="moverlay" onclick="closeModal(event)">
-    <div class="modal">
-      <div class="modal-hdr">${av}
-        <div class="modal-name">${e(a.name)}</div>
-        <button class="btn-close" onclick="S.authorId=null;render()">×</button>
-      </div>
-      <div class="modal-body">
-        ${a.description?`<div class="sec"><div class="sec-title">Об авторе</div><p class="modal-desc">${e(a.description)}</p></div>`:''}
-        ${g.video.length?`<div class="sec"><div class="sec-title">🎬 Видео</div><div class="video-list">${g.video.map(rVideo).join('')}</div></div>`:''}
-        ${g.audio.length?`<div class="sec"><div class="sec-title">🎵 Музыка и аудио</div><div class="audio-list">${g.audio.map(rAudio).join('')}</div></div>`:''}
-        ${g.image.length?`<div class="sec"><div class="sec-title">🖼️ Фотографии и изображения</div><div class="img-gallery">${g.image.map(rImage).join('')}</div></div>`:''}
-        ${g.docs.length?`<div class="sec"><div class="sec-title">📄 Документы и ссылки</div><div class="docs-list">${g.docs.map(rDoc).join('')}</div></div>`:''}
-        ${!files.length?`<p style="color:#9A7A5A;font-style:italic;font-size:14px">Файлы ещё не добавлены. Используйте панель управления.</p>`:''}
-      </div>
-    </div>
-  </div>`;
+  var badges=Object.keys(types).map(function(t){return'<span class="badge">'+t+'</span>';}).join('');
+  if(files.length)badges+='<span class="badge">'+files.length+' шт.</span>';
+  return'<div class="card" onclick="openAuthor(\''+a.id+'\')">'+av+
+    '<div class="card-name">'+esc(a.name)+'</div>'+
+    (a.description?'<div class="card-desc">'+esc(a.description)+'</div>':'')+
+    '<div class="badges">'+badges+'</div></div>';
 }
 
-function rVideo(f){
-  const t=getType(f.url,f.type);
-  const cap=f.title?`<div class="video-cap">${e(f.title)}</div>`:'';
-  let player='';
-  if(t==='youtube'){
-    const id=ytId(f.url);
+function renderModal(){
+  var mid=null;
+  var keys=Object.keys(D.months);
+  for(var i=0;i<keys.length;i++){if(D.months[keys[i]].authors[S.aid]){mid=keys[i];break;}}
+  if(!mid)return'';
+  var a=D.months[mid].authors[S.aid];
+  var files=a.files||[];
+  var vids=[],auds=[],imgs=[],docs=[];
+  files.forEach(function(f){
+    var t=getType(f.url,f.type);
+    if(t=='youtube'||t=='video')vids.push(f);
+    else if(t=='audio')auds.push(f);
+    else if(t=='image')imgs.push(f);
+    else docs.push(f);
+  });
+  var av=a.avatar?
+    '<img src="'+esc(a.avatar)+'" class="modal-ava" onerror="this.style.display=\'none\'">':
+    '<div class="modal-ava-ph">'+esc((a.name||'А')[0])+'</div>';
+  var html='<div class="overlay" id="moverlay" onclick="overlayClick(event)">'+
+    '<div class="modal"><div class="modal-hdr">'+av+
+    '<div class="modal-name">'+esc(a.name)+'</div>'+
+    '<button class="btn-x" onclick="closeModal()">×</button></div>'+
+    '<div class="modal-body">';
+  if(a.description)html+='<div class="sec"><div class="sec-t">Об авторе</div><p class="modal-desc">'+esc(a.description)+'</p></div>';
+  if(vids.length){
+    html+='<div class="sec"><div class="sec-t">🎬 Видео</div><div class="vid-list">';
+    vids.forEach(function(f){html+=renderVideo(f);});
+    html+='</div></div>';
+  }
+  if(auds.length){
+    html+='<div class="sec"><div class="sec-t">🎵 Музыка и аудио</div><div class="aud-list">';
+    auds.forEach(function(f){html+=renderAudio(f);});
+    html+='</div></div>';
+  }
+  if(imgs.length){
+    html+='<div class="sec"><div class="sec-t">🖼️ Изображения</div><div class="img-gal">';
+    imgs.forEach(function(f){html+=renderImg(f);});
+    html+='</div></div>';
+  }
+  if(docs.length){
+    html+='<div class="sec"><div class="sec-t">📄 Документы и ссылки</div><div class="doc-list">';
+    docs.forEach(function(f){html+=renderDoc(f);});
+    html+='</div></div>';
+  }
+  if(!files.length)html+='<p style="color:#9A7A5A;font-style:italic;font-size:14px">Файлы ещё не добавлены.</p>';
+  html+='</div></div></div>';
+  return html;
+}
+
+function renderVideo(f){
+  var t=getType(f.url,f.type);
+  var cap=f.title?'<div class="vid-cap">'+esc(f.title)+'</div>':'';
+  var player='';
+  if(t=='youtube'){
+    var id=ytid(f.url);
     if(id){
-      player=`<iframe src="https://www.youtube.com/embed/${id}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-    } else {
-      player=rDocFallback(f,'▶️');
+      player='<iframe src="https://www.youtube.com/embed/'+id+'?rel=0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    }else{
+      player='<div style="padding:14px"><a href="'+esc(f.url)+'" target="_blank" style="color:#C8522A;font-family:Lora,serif">▶ Открыть YouTube</a></div>';
     }
-  } else if(t==='video'){
-    player=`<video controls preload="metadata" style="width:100%;aspect-ratio:16/9;background:#000"><source src="${e(f.url)}">
-      <p style="padding:20px;color:#aaa;text-align:center">Браузер не поддерживает этот формат.<br><a href="${e(f.url)}" style="color:#C8522A">Скачать видео</a></p>
-    </video>`;
-  } else if(t==='yandex'){
-    // Try inline player via data attribute, fallback to link
-    player=`<div id="yd-${f.url.length}" style="background:#1A1A1A;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px">
-      <div style="color:#DDD;font-size:13px;font-family:'Lora',serif">💾 Яндекс Диск</div>
-      <a href="${e(f.url)}" target="_blank" style="color:#C8522A;font-size:14px;font-family:'Lora',serif;text-decoration:none;border:1px solid #C8522A;padding:8px 16px;border-radius:3px">Открыть на Яндекс Диске ↗</a>
-      ${f.directUrl?`<video controls preload="metadata" style="width:100%;margin-top:8px"><source src="${e(f.directUrl)}">Скачайте файл и воспроизведите локально</video>`:''}
-    </div>`;
+  }else if(t=='video'){
+    player='<video controls preload="metadata"><source src="'+esc(f.url)+'"><p style="padding:16px;color:#aaa;text-align:center">Браузер не поддерживает этот формат.<br><a href="'+esc(f.url)+'" style="color:#C8522A">Скачать видео</a></p></video>';
+  }else{
+    player='<div style="padding:14px"><a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:#C8522A;font-family:Lora,serif">💾 '+esc(f.title||f.url)+'</a></div>';
   }
-  return`<div class="video-wrap">${cap}${player}</div>`;
+  return'<div class="vid-wrap">'+cap+player+'</div>';
 }
 
-function rAudio(f){
-  const t=getType(f.url,f.type);
-  let player='';
-  if(t==='audio'){
-    player=`<audio controls preload="metadata" style="width:100%;height:32px">
-      <source src="${e(f.url)}">
-      <a href="${e(f.url)}" style="color:#C8522A">Скачать аудио</a>
-    </audio>`;
-  } else {
-    player=`<a href="${e(f.url)}" target="_blank" style="color:#C8522A;font-size:13px;font-family:'Lora',serif;text-decoration:none">Открыть ↗</a>`;
+function renderAudio(f){
+  var t=getType(f.url,f.type);
+  var player='';
+  if(t=='audio'){
+    player='<audio controls preload="metadata"><source src="'+esc(f.url)+'"><a href="'+esc(f.url)+'" style="color:#C8522A">Скачать</a></audio>';
+  }else{
+    player='<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:#C8522A;font-size:13px;font-family:Lora,serif">Открыть ↗</a>';
   }
-  return`<div class="audio-card">
-    <div class="audio-icon">🎵</div>
-    <div class="audio-info">
-      <div class="audio-title">${e(f.title||f.url.split('/').pop()||'Аудио')}</div>
-      ${player}
-    </div>
-  </div>`;
+  return'<div class="aud-card"><div class="aud-icon">🎵</div><div class="aud-info">'+
+    '<div class="aud-title">'+esc(f.title||decodeURIComponent(f.url.split('/').pop().split('?')[0])||'Аудио')+'</div>'+
+    player+'</div></div>';
 }
 
-function rImage(f){
-  return`<img src="${e(f.url)}" alt="${e(f.title||'')}" loading="lazy" onclick="event.stopPropagation();S.lbImg='${f.url.replace(/'/g,'\\'')}';render()" onerror="this.parentNode.removeChild(this)">`;
+function renderImg(f){
+  var safe=esc(f.url).replace(/'/g,'&#39;');
+  return'<img src="'+esc(f.url)+'" alt="'+esc(f.title||'')+'" loading="lazy" '+
+    'onclick="event.stopPropagation();openLb(\''+safe+'\')" '+
+    'onerror="this.parentNode&&this.parentNode.removeChild(this)">';
 }
 
-function rDoc(f){
-  const t=getType(f.url,f.type);
-  const ic={pdf:'📄',document:'📝',gdrive:'📁',yandex:'💾',link:'🔗'};
-  return`<a href="${e(f.url)}" target="_blank" rel="noopener" class="doc-link">
-    <span class="doc-icon">${ic[t]||'📎'}</span>
-    <span class="doc-name">${e(f.title||f.url)}</span>
-  </a>`;
+function renderDoc(f){
+  var t=getType(f.url,f.type);
+  var ic={pdf:'📄',document:'📝',gdrive:'📁',yandex:'💾',link:'🔗'};
+  return'<a href="'+esc(f.url)+'" target="_blank" rel="noopener" class="doc-link">'+
+    '<span class="doc-ic">'+(ic[t]||'📎')+'</span>'+
+    '<span class="doc-nm">'+esc(f.title||f.url)+'</span></a>';
 }
 
-function rDocFallback(f,icon){
-  return`<div style="padding:14px 16px;background:#1A1A1A">
-    <a href="${e(f.url)}" target="_blank" rel="noopener" style="color:#C8522A;font-family:'Lora',serif;font-size:14px;text-decoration:none">
-      ${icon||'🔗'} ${e(f.title||f.url)}
-    </a>
-  </div>`;
+// ---- LIGHTBOX ----
+function openLb(src){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lb').style.display='flex';
+}
+function closeLb(){
+  document.getElementById('lb').style.display='none';
+  document.getElementById('lb-img').src='';
 }
 
-/* ---- ADMIN ---- */
-function rAdmin(){
-  if(!S.adminAuthed)return`<div class="drawer">
-    <div class="drawer-hdr"><span class="drawer-title">Панель управления</span>
-      <button class="btn-close" onclick="toggleAdmin()">×</button></div>
-    <div class="pw-box"><h3>Введите пароль</h3>
-      <input class="fi" id="pw-in" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkPw()">
-      <div id="pw-msg" style="margin-top:8px"></div>
-      <button class="bp" style="margin-top:12px" onclick="checkPw()">Войти</button>
-      <p class="hint">По умолчанию: bchdt2025</p>
-    </div></div>`;
-
-  return`<div class="drawer" id="drawer">
-    <div class="drawer-hdr"><span class="drawer-title">⚙ Управление</span>
-      <button class="btn-close" onclick="toggleAdmin()">×</button></div>
-    <div class="drawer-body">
-      <div id="adm-msg"></div>
-      <div class="atabs">
-        ${[['months','Месяцы'],['authors','Авторы'],['files','Файлы'],['settings','⚙']].map(([k,v])=>
-          `<button class="atab${S.adminTab===k?' on':''}" onclick="setATab('${k}')">${v}</button>`).join('')}
-      </div>
-      <div id="atab">${rTab()}</div>
-    </div></div>`;
+// ---- ADMIN ----
+function renderAdmin(){
+  if(!S.authed)return renderAdmPw();
+  var tabs=['months','authors','files','settings'];
+  var tnames=['Месяцы','Авторы','Файлы','⚙'];
+  var tabBtns=tabs.map(function(t,i){
+    return'<button class="atab'+(S.atab==t?' on':'')+'" onclick="setAtab(\''+t+'\')">'+tnames[i]+'</button>';
+  }).join('');
+  return'<div class="drawer"><div class="dr-hdr"><span class="dr-title">⚙ Управление</span>'+
+    '<button class="btn-x" onclick="toggleAdm()">×</button></div>'+
+    '<div class="dr-body"><div id="adm-msg"></div>'+
+    '<div class="atabs">'+tabBtns+'</div>'+
+    '<div id="atab">'+renderTab()+'</div></div></div>';
 }
 
-function rTab(){
-  if(S.adminTab==='months')return rTabMonths();
-  if(S.adminTab==='authors')return rTabAuthors();
-  if(S.adminTab==='files')return rTabFiles();
-  return rTabSettings();
+function renderAdmPw(){
+  return'<div class="drawer"><div class="dr-hdr"><span class="dr-title">Управление</span>'+
+    '<button class="btn-x" onclick="toggleAdm()">×</button></div>'+
+    '<div class="dr-body" style="text-align:center;padding-top:40px">'+
+    '<p style="font-family:Playfair Display,serif;color:#C8522A;font-size:18px;margin-bottom:18px">Введите пароль</p>'+
+    '<input class="fi" id="pw" type="password" placeholder="Пароль" style="margin-bottom:8px" onkeydown="if(event.key==\'Enter\')checkPw()">'+
+    '<div id="pw-err"></div>'+
+    '<button class="bp" style="margin-top:8px" onclick="checkPw()">Войти</button>'+
+    '<p class="hint">По умолчанию: bchdt2025</p></div></div>';
 }
 
-function rTabMonths(){
-  const ms=sortMonths();
-  return`${ms.map(m=>`<div class="ali">
-    <span class="ali-name">${e(m.name)} (${Object.keys(m.authors||{}).length} авт.)</span>
-    <button class="bd" onclick="delMonth('${m.id}')">Удалить</button>
-  </div>`).join('')}
-  <div class="dvd"></div>
-  <p class="sec-add-title">+ Новый месяц</p>
-  <div class="fl"><label>Месяц</label>
-    <select class="fs" id="nm-id" onchange="var n=document.getElementById('nm-name');if(n)n.value=(${JSON.stringify(MM)})[this.value]||''">
-      ${Object.entries(MM).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}
-    </select></div>
-  <div class="fl"><label>Название</label><input class="fi" id="nm-name" value="Июнь"></div>
-  <button class="bp" onclick="addMonth()">Добавить месяц</button>`;
+function renderTab(){
+  if(S.atab=='months')return renderTabMonths();
+  if(S.atab=='authors')return renderTabAuthors();
+  if(S.atab=='files')return renderTabFiles();
+  return renderTabSettings();
 }
 
-function rTabAuthors(){
-  const ms=sortMonths();
-  const mid=S._aMid||ms[0]?.id||'';
-  const au=mid?sortAuthors(mid):[];
-  return`<div class="fl"><label>Месяц</label>
-    <select class="fs" id="a-mid" onchange="S._aMid=this.value;refreshTab()">
-      ${ms.map(m=>`<option value="${m.id}"${m.id===mid?' selected':''}>${e(m.name)}</option>`).join('')}
-    </select></div>
-  ${au.map(a=>`<div class="ali"><span class="ali-name">${e(a.name)} (${(a.files||[]).length} файл.)</span>
-    <button class="bd" onclick="delAuthor('${mid}','${a.id}')">Удалить</button></div>`).join('')}
-  ${!au.length?`<p style="color:#5A4A3A;font-size:12px;font-style:italic;margin-bottom:12px">Нет авторов</p>`:''}
-  <div class="dvd"></div>
-  <p class="sec-add-title">+ Добавить автора</p>
-  <div class="fl"><label>Имя *</label><input class="fi" id="a-name" placeholder="Иван Иванов"></div>
-  <div class="fl"><label>Описание / биография</label><textarea class="ft" id="a-desc" placeholder="Расскажите об авторе..."></textarea></div>
-  <div class="fl"><label>Фото (URL)</label><input class="fi" id="a-ava" placeholder="https://..."></div>
-  <button class="bp" onclick="addAuthor()">Добавить автора</button>`;
+function renderTabMonths(){
+  var ms=sortMonths();
+  var list=ms.map(function(m){
+    return'<div class="ali"><span class="ali-nm">'+esc(m.name)+' ('+Object.keys(m.authors||{}).length+' авт.)</span>'+
+      '<button class="bd" onclick="delMonth(\''+m.id+'\')">Удалить</button></div>';
+  }).join('');
+  var opts=Object.keys(MM).map(function(k){return'<option value="'+k+'">'+MM[k]+'</option>';}).join('');
+  return list+
+    '<div class="dvd"></div><p class="sec-h">+ Новый месяц</p>'+
+    '<div class="fl"><label>Месяц</label><select class="fs" id="nm-id" onchange="setNmName()">'+opts+'</select></div>'+
+    '<div class="fl"><label>Название</label><input class="fi" id="nm-name" value="Июнь"></div>'+
+    '<button class="bp" onclick="addMonth()">Добавить месяц</button>';
 }
 
-function rTabFiles(){
-  const ms=sortMonths();
-  const mid=S._fMid||ms[0]?.id||'';
-  const au=mid?sortAuthors(mid):[];
-  const aid=S._fAid||'';
-  const selA=aid&&D.months[mid]?D.months[mid].authors[aid]:null;
-
-  // Render file rows
-  const rows=newFileRows.map((row,i)=>`
-    <div class="frow">
-      <button class="frow-del" onclick="removeFileRow(${i})" title="Удалить строку">×</button>
-      <input class="fi" placeholder="URL: YouTube, MP3, MP4, JPG, PDF, Яндекс Диск..."
-        value="${e(row.url)}" onchange="newFileRows[${i}].url=this.value" style="margin-bottom:6px;padding-right:28px">
-      <input class="fi" placeholder="Название (необязательно)"
-        value="${e(row.title)}" onchange="newFileRows[${i}].title=this.value" style="margin-bottom:6px">
-      <select class="fs" onchange="newFileRows[${i}].type=this.value">
-        ${['auto','youtube','video','audio','image','pdf','document','yandex','link'].map(t=>`<option value="${t}"${row.type===t?' selected':''}>${{auto:'Авто',youtube:'YouTube',video:'Видео',audio:'Аудио',image:'Изображение',pdf:'PDF',document:'Документ',yandex:'Яндекс Диск',link:'Ссылка'}[t]}</option>`).join('')}
-      </select>
-    </div>`).join('');
-
-  return`
-  <div class="fl"><label>Месяц</label>
-    <select class="fs" id="f-mid" onchange="S._fMid=this.value;S._fAid='';refreshTab()">
-      ${ms.map(m=>`<option value="${m.id}"${m.id===mid?' selected':''}>${e(m.name)}</option>`).join('')}
-    </select></div>
-  <div class="fl"><label>Автор</label>
-    <select class="fs" id="f-aid" onchange="S._fAid=this.value;refreshTab()">
-      <option value="">— выберите автора —</option>
-      ${au.map(a=>`<option value="${a.id}"${a.id===aid?' selected':''}>${e(a.name)}</option>`).join('')}
-    </select></div>
-
-  ${selA&&(selA.files||[]).length?`
-    <div style="margin-bottom:12px">
-      <p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:'Lora',serif">Файлы автора (${selA.files.length}):</p>
-      ${selA.files.map((f,i)=>`<div class="ali">
-        <span class="ali-name">${e(f.title||f.url).slice(0,42)}...</span>
-        <button class="bd" onclick="delFile('${mid}','${aid}',${i})">✕</button>
-      </div>`).join('')}
-    </div>`:''}
-
-  <div class="dvd"></div>
-  <p class="sec-add-title">+ Добавить файлы</p>
-
-  <div id="file-rows">${rows}</div>
-  <button class="bp-add" onclick="addFileRow()">+ Ещё строка</button>
-
-  <div class="dvd"></div>
-  <p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:'Lora',serif">Или вставить несколько URL сразу</p>
-  <div class="fl">
-    <textarea class="batch-area" id="batch-urls" placeholder="Вставьте ссылки — каждая на новой строке:&#10;https://youtube.com/watch?v=...&#10;https://example.com/music.mp3&#10;https://disk.yandex.ru/d/..."></textarea>
-  </div>
-  <button class="bp" onclick="addBatchFiles()" style="margin-bottom:4px">Добавить все файлы</button>
-  <p class="hint">💡 Для прямого воспроизведения используйте прямые ссылки на файлы (.mp3, .mp4, .jpg и т.д.) или YouTube. Яндекс Диск и другие хранилища откроются как ссылки.</p>`;
+function setNmName(){
+  var id=gv('nm-id');
+  var el=document.getElementById('nm-name');
+  if(el&&MM[id])el.value=MM[id];
 }
 
-function rTabSettings(){
-  return`<div class="fl"><label>Название сайта</label><input class="fi" id="s-title" value="${e(D.settings.title)}"></div>
-  <div class="fl"><label>Подзаголовок</label><input class="fi" id="s-sub" value="${e(D.settings.subtitle)}"></div>
-  <div class="fl"><label>Пароль администратора</label><input class="fi" id="s-pw" type="text" value="${e(D.settings.adminPassword)}"></div>
-  <button class="bp" onclick="saveSettings()">Сохранить</button>
-  <div class="dvd"></div>
-  <p class="hint"><b style="color:#9A7A5A">Резервная копия данных (консоль F12):</b><br>
-  <code style="color:#C8522A;font-size:10px">copy(localStorage.getItem('bchdt-bonuses-v3'))</code></p>`;
+function renderTabAuthors(){
+  var ms=sortMonths();
+  var mid=S.amid||( ms.length?ms[0].id:'');
+  var au=mid?sortAuthors(mid):[];
+  var mopts=ms.map(function(m){return'<option value="'+m.id+'"'+(m.id==mid?' selected':'')+'>'+esc(m.name)+'</option>';}).join('');
+  var list=au.map(function(a){
+    return'<div class="ali"><span class="ali-nm">'+esc(a.name)+' ('+( a.files||[]).length+' файл.)</span>'+
+      '<button class="bd" onclick="delAuthor(\''+mid+'\',\''+a.id+'\')">Удалить</button></div>';
+  }).join('');
+  if(!au.length)list='<p style="color:#5A4A3A;font-size:12px;font-style:italic;margin-bottom:12px">Нет авторов</p>';
+  return'<div class="fl"><label>Месяц</label><select class="fs" id="a-mid" onchange="S.amid=this.value;refreshTab()">'+mopts+'</select></div>'+
+    list+
+    '<div class="dvd"></div><p class="sec-h">+ Добавить автора</p>'+
+    '<div class="fl"><label>Имя *</label><input class="fi" id="a-name" placeholder="Иван Иванов"></div>'+
+    '<div class="fl"><label>Описание</label><textarea class="fta" id="a-desc" placeholder="Биография..."></textarea></div>'+
+    '<div class="fl"><label>Фото (URL)</label><input class="fi" id="a-ava" placeholder="https://..."></div>'+
+    '<button class="bp" onclick="addAuthor()">Добавить автора</button>';
 }
 
-/* ---- FILE ROWS ---- */
-function addFileRow(){
-  newFileRows.push({url:'',title:'',type:'auto'});
-  const el=document.getElementById('file-rows');
-  if(el){const i=newFileRows.length-1;
-    const div=document.createElement('div');
-    div.innerHTML=`<div class="frow">
-      <button class="frow-del" onclick="removeFileRow(${i})" title="Удалить">×</button>
-      <input class="fi" placeholder="URL файла..." onchange="newFileRows[${i}].url=this.value" style="margin-bottom:6px;padding-right:28px">
-      <input class="fi" placeholder="Название (необязательно)" onchange="newFileRows[${i}].title=this.value" style="margin-bottom:6px">
-      <select class="fs" onchange="newFileRows[${i}].type=this.value">
-        ${['auto','youtube','video','audio','image','pdf','document','yandex','link'].map(t=>`<option value="${t}">${{auto:'Авто',youtube:'YouTube',video:'Видео',audio:'Аудио',image:'Изображение',pdf:'PDF',document:'Документ',yandex:'Яндекс Диск',link:'Ссылка'}[t]}</option>`).join('')}
-      </select></div>`;
-    el.appendChild(div.firstElementChild);
+function renderTabFiles(){
+  var ms=sortMonths();
+  var mid=S.fmid||(ms.length?ms[0].id:'');
+  var au=mid?sortAuthors(mid):[];
+  var faid=S.faid||'';
+  var selA=faid&&D.months[mid]?D.months[mid].authors[faid]:null;
+  var mopts=ms.map(function(m){return'<option value="'+m.id+'"'+(m.id==mid?' selected':'')+'>'+esc(m.name)+'</option>';}).join('');
+  var aopts='<option value="">— выберите автора —</option>'+au.map(function(a){return'<option value="'+a.id+'"'+(a.id==faid?' selected':'')+'>'+esc(a.name)+'</option>';}).join('');
+  var curFiles='';
+  if(selA&&(selA.files||[]).length){
+    curFiles='<p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:Lora,serif">Файлы автора ('+selA.files.length+'):</p>'+
+      selA.files.map(function(f,i){
+        return'<div class="ali"><span class="ali-nm">'+esc((f.title||f.url).slice(0,44))+'</span>'+
+          '<button class="bd" onclick="delFile(\''+mid+'\',\''+faid+'\','+i+')">✕</button></div>';
+      }).join('');
   }
+  var rows=renderFileRows();
+  return'<div class="fl"><label>Месяц</label><select class="fs" id="f-mid" onchange="S.fmid=this.value;S.faid=\'\';refreshTab()">'+mopts+'</select></div>'+
+    '<div class="fl"><label>Автор</label><select class="fs" id="f-aid" onchange="S.faid=this.value;refreshTab()">'+aopts+'</select></div>'+
+    (curFiles?'<div style="margin-bottom:12px">'+curFiles+'</div>':'')+
+    '<div class="dvd"></div><p class="sec-h">+ Добавить файлы</p>'+
+    '<div id="file-rows">'+rows+'</div>'+
+    '<button class="bp-add" onclick="addRow()">+ Ещё строка</button>'+
+    '<div class="dvd"></div>'+
+    '<p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:Lora,serif">Или вставьте несколько ссылок сразу:</p>'+
+    '<textarea class="fta" id="batch" style="min-height:80px" placeholder="Каждая ссылка на новой строке:&#10;https://youtube.com/watch?v=...&#10;https://example.com/song.mp3&#10;https://disk.yandex.ru/d/..."></textarea>'+
+    '<button class="bp" onclick="addFiles()">Добавить все файлы</button>'+
+    '<p class="hint">💡 Прямые ссылки на .mp3 .mp4 .jpg играют встроенно. YouTube — iframe-плеер. Яндекс Диск — открывается в новой вкладке.</p>';
 }
 
-function removeFileRow(i){
-  newFileRows.splice(i,1);
-  if(!newFileRows.length)newFileRows=[{url:'',title:'',type:'auto'}];
-  refreshTab();
+function renderFileRows(){
+  return ROWS.map(function(row,i){
+    var topts=Object.keys(FT).map(function(k){return'<option value="'+k+'"'+(row.type==k?' selected':'')+'>'+FT[k]+'</option>';}).join('');
+    return'<div class="frow" id="frow-'+i+'">'+
+      '<button class="frow-x" onclick="removeRow('+i+')">×</button>'+
+      '<input class="fi" placeholder="URL: YouTube, MP3, MP4, JPG, PDF..." style="margin-bottom:6px;padding-right:26px" value="'+esc(row.url)+'" onchange="ROWS['+i+'].url=this.value">'+
+      '<input class="fi" placeholder="Название (необязательно)" style="margin-bottom:6px" value="'+esc(row.title)+'" onchange="ROWS['+i+'].title=this.value">'+
+      '<select class="fs" onchange="ROWS['+i+'].type=this.value">'+topts+'</select>'+
+      '</div>';
+  }).join('');
 }
 
-/* ---- ACTIONS ---- */
-function toggleAdmin(){S.adminOpen=!S.adminOpen;render();}
-function setMonth(id){S.monthId=id;render();}
-function setATab(t){S.adminTab=t;render();}
-function openAuthor(id){S.authorId=id;render();}
-function closeModal(ev){if(ev.target.id==='moverlay'){S.authorId=null;render();}}
-function refreshTab(){const el=document.getElementById('atab');if(el)el.innerHTML=rTab();}
+function renderTabSettings(){
+  return'<div class="fl"><label>Название сайта</label><input class="fi" id="s-title" value="'+esc(D.settings.title)+'"></div>'+
+    '<div class="fl"><label>Подзаголовок</label><input class="fi" id="s-sub" value="'+esc(D.settings.subtitle)+'"></div>'+
+    '<div class="fl"><label>Пароль</label><input class="fi" id="s-pw" type="text" value="'+esc(D.settings.pw)+'"></div>'+
+    '<button class="bp" onclick="saveSettings()">Сохранить</button>'+
+    '<div class="dvd"></div>'+
+    '<p class="hint">Резервная копия (консоль F12):<br><code style="color:#C8522A;font-size:10px">copy(localStorage.getItem(\'bchdt-v4\'))</code></p>';
+}
+
+// ---- ACTIONS ----
+function toggleAdm(){S.adm=!S.adm;render();}
+function setMonth(id){S.mid=id;render();}
+function setAtab(t){S.atab=t;render();}
+function openAuthor(id){S.aid=id;render();}
+function closeModal(){S.aid=null;render();}
+function overlayClick(e){if(e.target.id=='moverlay')closeModal();}
+function refreshTab(){var el=document.getElementById('atab');if(el)el.innerHTML=renderTab();}
 
 function admMsg(txt,err){
-  const el=document.getElementById('adm-msg');
+  var el=document.getElementById('adm-msg');
   if(!el)return;
-  el.innerHTML=`<div class="${err?'emsg':'smsg'}">${e(txt)}</div>`;
-  setTimeout(()=>{if(el)el.innerHTML='';},3000);
+  el.innerHTML='<div class="'+(err?'emsg':'smsg')+'">'+esc(txt)+'</div>';
+  setTimeout(function(){if(el)el.innerHTML='';},3000);
 }
 
 function checkPw(){
-  const v=(document.getElementById('pw-in')||{}).value||'';
-  if(v===D.settings.adminPassword){S.adminAuthed=true;render();}
-  else{const el=document.getElementById('pw-msg');if(el)el.innerHTML='<div class="emsg">Неверный пароль</div>';}
+  var v=gv('pw');
+  if(v==D.settings.pw){S.authed=true;render();}
+  else{var el=document.getElementById('pw-err');if(el)el.innerHTML='<div class="emsg">Неверный пароль</div>';}
 }
 
 function addMonth(){
-  const id=gv('nm-id');
-  const name=gv('nm-name')||MM[id]||id;
+  var id=gv('nm-id'),name=gv('nm-name')||MM[id]||id;
+  if(!id)return;
   if(D.months[id]){admMsg('Уже существует',true);return;}
-  D.months[id]={id,name,order:Object.keys(D.months).length+1,authors:{}};
+  D.months[id]={id:id,name:name,order:Object.keys(D.months).length+1,authors:{}};
   save();admMsg('Месяц добавлен!');render();
 }
 function delMonth(id){
-  if(!confirm(`Удалить "${D.months[id]?.name}"? Все авторы удалятся.`))return;
+  if(!confirm('Удалить месяц "'+D.months[id].name+'"? Все авторы удалятся.'))return;
   delete D.months[id];
-  if(S.monthId===id)S.monthId=sortMonths()[0]?.id||null;
+  if(S.mid==id){var ms=sortMonths();S.mid=ms.length?ms[0].id:null;}
   save();render();
 }
 function addAuthor(){
-  const mid=gv('a-mid')||S._aMid;
-  const name=gv('a-name').trim();
+  var mid=gv('a-mid')||S.amid;
+  var name=gv('a-name').trim();
   if(!name){admMsg('Введите имя',true);return;}
   if(!D.months[mid]){admMsg('Выберите месяц',true);return;}
-  const id=uid();
-  D.months[mid].authors[id]={id,name,description:gv('a-desc').trim(),avatar:gv('a-ava').trim(),files:[],createdAt:Date.now()};
-  save();admMsg('Автор добавлен!');S._aMid=mid;refreshTab();
+  var id=uid();
+  D.months[mid].authors[id]={id:id,name:name,description:gv('a-desc').trim(),avatar:gv('a-ava').trim(),files:[],createdAt:Date.now()};
+  save();admMsg('Автор добавлен!');S.amid=mid;refreshTab();
 }
 function delAuthor(mid,aid){
   if(!confirm('Удалить автора и все его файлы?'))return;
   delete D.months[mid].authors[aid];
-  if(S.authorId===aid)S.authorId=null;
+  if(S.aid==aid)S.aid=null;
   save();render();
 }
 
-function addBatchFiles(){
-  const mid=gv('f-mid')||S._fMid;
-  const aid=gv('f-aid')||S._fAid;
-  if(!aid){admMsg('Выберите автора',true);return;}
-  if(!D.months[mid]?.authors[aid]){admMsg('Автор не найден',true);return;}
-  const raw=gv('batch-urls');
-  const urls=raw.split('\n').map(s=>s.trim()).filter(s=>s.length>0);
-  if(!urls.length){admMsg('Вставьте ссылки в поле',true);return;}
-  // Also add from rows
-  newFileRows.forEach(r=>{if(r.url.trim())urls.push('__row__'+JSON.stringify(r));});
-
-  let added=0;
-  urls.forEach(urlOrRow=>{
-    let url,title,type;
-    if(urlOrRow.startsWith('__row__')){
-      const row=JSON.parse(urlOrRow.slice(7));
-      url=row.url.trim();title=row.title.trim();type=row.type;
-    } else {url=urlOrRow;title='';type='auto';}
-    if(!url)return;
-    D.months[mid].authors[aid].files.push({url,title:title||undefined,type:type==='auto'?undefined:type});
-    added++;
-  });
-
-  if(!added){admMsg('Нет ссылок для добавления',true);return;}
-  save();
-  newFileRows=[{url:'',title:'',type:'auto'}];
-  admMsg(`Добавлено ${added} файл.!`);
-  S._fMid=mid;S._fAid=aid;
+function addRow(){
+  ROWS.push({url:'',title:'',type:'auto'});
+  var el=document.getElementById('file-rows');
+  if(el){
+    var i=ROWS.length-1;
+    var topts=Object.keys(FT).map(function(k){return'<option value="'+k+'">'+FT[k]+'</option>';}).join('');
+    var div=document.createElement('div');
+    div.className='frow';
+    div.id='frow-'+i;
+    div.innerHTML=
+      '<button class="frow-x" onclick="removeRow('+i+')">×</button>'+
+      '<input class="fi" placeholder="URL..." style="margin-bottom:6px;padding-right:26px" onchange="ROWS['+i+'].url=this.value">'+
+      '<input class="fi" placeholder="Название (необязательно)" style="margin-bottom:6px" onchange="ROWS['+i+'].title=this.value">'+
+      '<select class="fs" onchange="ROWS['+i+'].type=this.value">'+topts+'</select>';
+    el.appendChild(div);
+  }
+}
+function removeRow(i){
+  ROWS.splice(i,1);
+  if(!ROWS.length)ROWS=[{url:'',title:'',type:'auto'}];
   refreshTab();
 }
 
-function delFile(mid,aid,idx){
-  D.months[mid].authors[aid].files.splice(idx,1);
-  save();S._fMid=mid;S._fAid=aid;refreshTab();
+function addFiles(){
+  var mid=gv('f-mid')||S.fmid;
+  var faid=gv('f-aid')||S.faid;
+  if(!faid){admMsg('Выберите автора',true);return;}
+  if(!D.months[mid]||!D.months[mid].authors[faid]){admMsg('Автор не найден',true);return;}
+  var author=D.months[mid].authors[faid];
+  var added=0;
+  // from rows
+  ROWS.forEach(function(r){
+    var url=r.url.trim();
+    if(!url)return;
+    author.files.push({url:url,title:r.title.trim()||undefined,type:r.type=='auto'?undefined:r.type});
+    added++;
+  });
+  // from batch textarea
+  var batch=gv('batch');
+  if(batch){
+    batch.split('\n').forEach(function(line){
+      var url=line.trim();
+      if(!url)return;
+      author.files.push({url:url});
+      added++;
+    });
+  }
+  if(!added){admMsg('Нет ссылок',true);return;}
+  save();
+  ROWS=[{url:'',title:'',type:'auto'}];
+  admMsg('Добавлено: '+added+' файл.!');
+  S.fmid=mid;S.faid=faid;
+  refreshTab();
+}
+
+function delFile(mid,faid,idx){
+  D.months[mid].authors[faid].files.splice(idx,1);
+  save();S.fmid=mid;S.faid=faid;refreshTab();
 }
 function saveSettings(){
-  const t=gv('s-title'),sub=gv('s-sub'),pw=gv('s-pw');
-  if(t)D.settings.title=t;if(sub)D.settings.subtitle=sub;if(pw)D.settings.adminPassword=pw;
+  var t=gv('s-title'),sub=gv('s-sub'),pw=gv('s-pw');
+  if(t)D.settings.title=t;
+  if(sub)D.settings.subtitle=sub;
+  if(pw)D.settings.pw=pw;
   save();admMsg('Сохранено!');render();
 }
 
-/* ---- INIT ---- */
-load();render();
+document.onkeydown=function(e){
+  if(e.key=='Escape'){
+    if(document.getElementById('lb').style.display!='none'){closeLb();}
+    else if(S.aid){closeModal();}
+    else if(S.adm){toggleAdm();}
+  }
+};
+
+load();
+render();
 </script>
 </body>
 </html>

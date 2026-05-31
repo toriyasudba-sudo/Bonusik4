@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бонусы авторов — БЧДТ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#FDF7EF;font-family:'Lora',Georgia,serif;color:#2A1A0A;min-height:100vh}
+.hdr{background:#2A1A0A;padding:28px 40px 24px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0,transparent 20px,rgba(200,82,42,.05) 20px,rgba(200,82,42,.05) 21px)}
+.hdr-inner{max-width:1100px;margin:0 auto;position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hdr-title{font-family:'Playfair Display',serif;font-size:36px;color:#FDF7EF;line-height:1.1}
+.hdr-sub{font-size:12px;color:#C8522A;letter-spacing:2px;text-transform:uppercase;margin-top:6px;font-style:italic}
+.btn-adm{background:transparent;border:1.5px solid rgba(200,82,42,.5);color:#C8522A;padding:8px 18px;font-family:'Lora',serif;font-size:13px;cursor:pointer;letter-spacing:1px;transition:all .2s;border-radius:2px}
+.btn-adm:hover,.btn-adm.on{background:#C8522A;color:#FDF7EF;border-color:#C8522A}
+.mnav{background:#FFFAF3;border-bottom:1.5px solid #E8D8C0;padding:0 40px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(42,26,10,.06)}
+.mnav-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.mnav-inner::-webkit-scrollbar{display:none}
+.mtab{padding:15px 22px;font-family:'Playfair Display',serif;font-size:15px;color:#8A6A4A;cursor:pointer;border:none;background:none;white-space:nowrap;position:relative;transition:color .2s}
+.mtab::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:#C8522A;transform:scaleX(0);transition:transform .2s}
+.mtab:hover{color:#2A1A0A}
+.mtab.on{color:#C8522A;font-weight:600}
+.mtab.on::after{transform:scaleX(1)}
+.main{max-width:1100px;margin:0 auto;padding:40px 40px 80px}
+.m-heading{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:6px}
+.m-count{font-size:13px;color:#9A7A5A;font-style:italic;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+.card{background:#FFFAF3;border:1.5px solid #E8D8C0;border-radius:4px;padding:22px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#C8522A,#E8943A);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(42,26,10,.1);border-color:#C8522A}
+.card:hover::before{transform:scaleX(1)}
+.card-ava{width:68px;height:68px;border-radius:50%;object-fit:cover;border:2.5px solid #E8D8C0;margin-bottom:14px;display:block}
+.card-ava-ph{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,rgba(200,82,42,.15),rgba(232,148,58,.15));border:2px solid #E8D8C0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:24px;color:#C8522A;margin-bottom:14px}
+.card-name{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:5px}
+.card-desc{font-size:13px;color:#7A5A3A;font-style:italic;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.badges{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;background:#F0E8D8;border-radius:10px;color:#6A4A2A}
+.overlay{position:fixed;inset:0;background:rgba(42,26,10,.8);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:30px 20px;overflow-y:auto;backdrop-filter:blur(5px)}
+.modal{background:#FDF7EF;width:100%;max-width:860px;border-radius:6px;animation:up .3s ease;margin-bottom:40px}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-hdr{background:#2A1A0A;padding:24px 28px;display:flex;align-items:center;gap:18px;border-radius:6px 6px 0 0}
+.modal-ava{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C8522A;flex-shrink:0}
+.modal-ava-ph{width:60px;height:60px;border-radius:50%;background:rgba(200,82,42,.2);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:#C8522A;flex-shrink:0}
+.modal-name{font-family:'Playfair Display',serif;font-size:24px;color:#FDF7EF;flex:1}
+.btn-x{background:none;border:none;color:#9A7A5A;font-size:28px;cursor:pointer;line-height:1;padding:0 4px;transition:color .2s;flex-shrink:0}
+.btn-x:hover{color:#FDF7EF}
+.modal-body{padding:28px 32px}
+.sec{margin-bottom:32px}
+.sec-t{font-family:'Playfair Display',serif;font-size:15px;color:#C8522A;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #E8D8C0}
+.modal-desc{font-size:15px;color:#3A2A1A;line-height:1.9;font-style:italic;white-space:pre-wrap}
+.vid-list{display:flex;flex-direction:column;gap:18px}
+.vid-wrap{border-radius:6px;overflow:hidden;background:#111;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.vid-cap{font-size:13px;padding:8px 12px;color:#eee;background:#222;font-family:'Lora',serif}
+.vid-wrap video,.vid-wrap iframe{width:100%;display:block;aspect-ratio:16/9;border:none}
+.aud-list{display:flex;flex-direction:column;gap:10px}
+.aud-card{background:#2A1A0A;border-radius:6px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.aud-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C8522A,#E8943A);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.aud-info{flex:1;min-width:0}
+.aud-title{font-family:'Lora',serif;font-size:13px;color:#FDF7EF;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aud-card audio{width:100%;height:32px;display:block}
+.img-gal{columns:2 180px;gap:8px}
+.img-gal img{width:100%;display:block;margin-bottom:8px;border-radius:4px;cursor:pointer;transition:opacity .2s}
+.img-gal img:hover{opacity:.85}
+.doc-list{display:flex;flex-direction:column;gap:8px}
+.doc-link{display:flex;align-items:center;gap:12px;padding:13px 16px;text-decoration:none;color:#C8522A;background:#FFFAF3;border:1px solid #E8D8C0;border-radius:4px;transition:all .15s;font-family:'Lora',serif}
+.doc-link:hover{background:#F0E8D8;border-color:#C8522A;transform:translateX(3px)}
+.doc-ic{font-size:20px;flex-shrink:0}
+.doc-nm{font-size:14px;word-break:break-all}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:300;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.lb img{max-width:95vw;max-height:92vh;object-fit:contain;border-radius:3px}
+.lb-x{position:absolute;top:14px;right:18px;color:#fff;font-size:32px;cursor:pointer;background:none;border:none;line-height:1}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:440px;background:#1A0E05;z-index:200;overflow-y:auto;box-shadow:-4px 0 28px rgba(0,0,0,.5);animation:sin .3s ease}
+@keyframes sin{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.dr-hdr{padding:18px 22px;background:#0A0500;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,82,42,.2);position:sticky;top:0;z-index:1}
+.dr-title{font-family:'Playfair Display',serif;color:#C8522A;font-size:17px}
+.dr-body{padding:18px 22px}
+.atabs{display:flex;gap:3px;margin-bottom:18px;background:#0A0500;padding:3px;border-radius:4px}
+.atab{flex:1;padding:7px 4px;background:none;border:none;color:#7A5A3A;font-size:12px;cursor:pointer;border-radius:3px;transition:all .2s;font-family:'Lora',serif}
+.atab.on{background:#C8522A;color:#FDF7EF}
+.fl{margin-bottom:11px}
+.fl label{display:block;font-size:11px;color:#9A7A5A;margin-bottom:4px;letter-spacing:.8px;text-transform:uppercase;font-family:'Lora',serif}
+.fi,.fs,.fta{width:100%;background:#0A0500;border:1px solid #3A2A1A;color:#DDD0C0;padding:8px 11px;font-family:'Lora',serif;font-size:13px;border-radius:3px;outline:none;transition:border-color .2s}
+.fi:focus,.fs:focus,.fta:focus{border-color:#C8522A}
+.fta{resize:vertical;min-height:70px}
+.fs option{background:#1A0E05}
+.bp{background:#C8522A;border:none;color:#FDF7EF;padding:9px 18px;font-family:'Lora',serif;font-size:13px;cursor:pointer;border-radius:3px;width:100%;transition:background .2s;margin-top:3px}
+.bp:hover{background:#A84020}
+.bp-add{background:transparent;border:1px dashed rgba(200,82,42,.5);color:#C8522A;padding:7px 14px;font-size:12px;cursor:pointer;border-radius:3px;font-family:'Lora',serif;transition:all .2s;width:100%;margin-top:6px}
+.bp-add:hover{background:rgba(200,82,42,.1)}
+.bd{background:#5A1A0A;border:none;color:#FFAA88;padding:4px 9px;font-size:11px;cursor:pointer;border-radius:2px;font-family:'Lora',serif}
+.bd:hover{background:#8A2A1A}
+.ali{background:#0A0500;border:1px solid #3A2A1A;border-radius:3px;padding:8px 11px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ali-nm{font-size:12px;color:#DDD0C0;font-family:'Lora',serif;flex:1;word-break:break-all}
+.dvd{height:1px;background:rgba(200,82,42,.2);margin:16px 0}
+.smsg{background:rgba(80,160,80,.15);border:1px solid rgba(80,160,80,.3);color:#80C080;padding:7px 11px;font-size:12px;border-radius:3px;margin-bottom:10px;font-family:'Lora',serif}
+.emsg{background:rgba(200,82,42,.1);border:1px solid rgba(200,82,42,.3);color:#C8522A;padding:7px 11px;font-size:12px;border-radius:3px;margin-bottom:10px;font-family:'Lora',serif}
+.empty{text-align:center;padding:70px 20px;color:#9A7A5A;font-family:'Playfair Display',serif;font-size:17px;font-style:italic}
+.empty p{margin-top:8px;font-size:13px;font-family:'Lora',serif}
+.frow{background:#0A0500;border:1px solid #2A1A0A;border-radius:4px;padding:10px 10px 10px 10px;margin-bottom:8px;position:relative}
+.frow-x{position:absolute;top:6px;right:6px;background:none;border:none;color:#5A3A2A;font-size:16px;cursor:pointer;line-height:1;padding:0 4px}
+.frow-x:hover{color:#C8522A}
+.frow .fi,.frow .fs{margin-bottom:6px}
+.hint{font-size:11px;color:#5A4A3A;margin-top:10px;font-style:italic;font-family:'Lora',serif;line-height:1.6}
+.sec-h{color:#C8522A;font-size:13px;margin-bottom:10px;font-family:'Playfair Display',serif}
+@media(max-width:640px){
+  .hdr{padding:18px 16px 14px}
+  .hdr-title{font-size:24px}
+  .mnav{padding:0 12px}
+  .main{padding:22px 16px 60px}
+  .modal-body{padding:18px 16px}
+  .drawer{width:100%}
+  .overlay{padding:0}
+  .modal{border-radius:0;margin-bottom:0}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="lb" style="display:none" class="lb" onclick="closeLb()">
+  <button class="lb-x" onclick="closeLb()">×</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+var SK = 'bchdt-v4';
+var MM = {january:'Январь',february:'Февраль',march:'Март',april:'Апрель',may:'Май',june:'Июнь',july:'Июль',august:'Август',september:'Сентябрь',october:'Октябрь',november:'Ноябрь',december:'Декабрь'};
+var FT = {auto:'Авто',youtube:'YouTube',video:'Видео (.mp4)',audio:'Аудио (.mp3)',image:'Изображение',pdf:'PDF',document:'Документ',yandex:'Яндекс Диск',link:'Ссылка'};
+var DEF = {settings:{title:'Бонусы авторов',subtitle:'Клан читателей журнала БЧДТ',pw:'bchdt2025'},months:{may:{id:'may',name:'Май',order:1,authors:{}}}};
+
+var D = null;
+var S = {mid:null,aid:null,adm:false,atab:'authors',authed:false,fmid:null,faid:null,amid:null};
+var ROWS = [{url:'',title:'',type:'auto'}];
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+function uid(){return 'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+
+function getType(url,manual){
+  if(manual&&manual!='auto')return manual;
+  var u=String(url||'');
+  var ext=u.split('?')[0].split('.').pop().toLowerCase();
+  if(['mp4','webm','mov','avi'].indexOf(ext)>=0)return'video';
+  if(['mp3','wav','ogg','m4a','flac'].indexOf(ext)>=0)return'audio';
+  if(['jpg','jpeg','png','gif','webp','svg'].indexOf(ext)>=0)return'image';
+  if(ext=='pdf')return'pdf';
+  if(['doc','docx'].indexOf(ext)>=0)return'document';
+  if(u.match(/youtu/))return'youtube';
+  if(u.indexOf('disk.yandex')>=0)return'yandex';
+  if(u.indexOf('drive.google')>=0)return'gdrive';
+  return'link';
+}
+function ytid(url){var m=String(url||'').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);return m?m[1]:null;}
+
+function sortMonths(){return Object.values(D.months).sort(function(a,b){return a.order-b.order;});}
+function sortAuthors(mid){
+  var m=D.months[mid];
+  if(!m)return[];
+  return Object.values(m.authors||{}).sort(function(a,b){return(a.createdAt||0)-(b.createdAt||0);});
+}
+
+function load(){
+  try{
+    var raw=localStorage.getItem(SK);
+    D=raw?JSON.parse(raw):JSON.parse(JSON.stringify(DEF));
+  }catch(e){D=JSON.parse(JSON.stringify(DEF));}
+  var ms=sortMonths();
+  S.mid=ms.length?ms[0].id:null;
+  S.amid=S.mid;
+  S.fmid=S.mid;
+}
+function save(){try{localStorage.setItem(SK,JSON.stringify(D));}catch(e){}}
+
+function render(){
+  try{
+    var html='';
+    html+=renderHeader();
+    html+=renderNav();
+    html+='<div class="main">'+renderMain()+'</div>';
+    if(S.aid)html+=renderModal();
+    if(S.adm)html+=renderAdmin();
+    document.getElementById('app').innerHTML=html;
+  }catch(e){
+    document.getElementById('app').innerHTML='<div style="padding:40px;color:red;font-family:monospace">Ошибка: '+e.message+'</div>';
+    console.error(e);
+  }
+}
+
+function renderHeader(){
+  return '<header class="hdr"><div class="hdr-inner"><div>'+
+    '<div class="hdr-title">'+esc(D.settings.title)+'</div>'+
+    '<div class="hdr-sub">'+esc(D.settings.subtitle)+'</div>'+
+    '</div><button class="btn-adm'+(S.adm?' on':'')+'" onclick="toggleAdm()">'+
+    (S.adm?'✕ Закрыть':'⚙ Управление')+'</button></div></header>';
+}
+
+function renderNav(){
+  var ms=sortMonths();
+  if(!ms.length)return'';
+  var tabs=ms.map(function(m){
+    return '<button class="mtab'+(S.mid==m.id?' on':'')+'" onclick="setMonth(\''+esc(m.id)+'\')">'+esc(m.name)+'</button>';
+  }).join('');
+  return'<nav class="mnav"><div class="mnav-inner">'+tabs+'</div></nav>';
+}
+
+function renderMain(){
+  var m=D.months[S.mid];
+  if(!m)return'<div class="empty">Добавьте первый месяц через панель управления</div>';
+  var au=sortAuthors(S.mid);
+  var cnt=au.length;
+  var cs=cnt==0?'Авторы ещё не добавлены':cnt+' '+(cnt==1?'автор':cnt<5?'автора':'авторов');
+  var cards=cnt?('<div class="grid">'+au.map(renderCard).join('')+'</div>'):
+    '<div class="empty">Авторы ещё не добавлены<p>Откройте панель управления</p></div>';
+  return'<h2 class="m-heading">Бонусы — '+esc(m.name)+'</h2><p class="m-count">'+cs+'</p>'+cards;
+}
+
+function renderCard(a){
+  var av=a.avatar?
+    '<img src="'+esc(a.avatar)+'" class="card-ava" onerror="this.style.display=\'none\'">':
+    '<div class="card-ava-ph">'+esc((a.name||'А')[0])+'</div>';
+  var files=a.files||[];
+  var types={};
+  files.forEach(function(f){
+    var t=getType(f.url,f.type);
+    var g=['youtube','video'].indexOf(t)>=0?'видео':t=='audio'?'аудио':t=='image'?'фото':'файл';
+    types[g]=1;
+  });
+  var badges=Object.keys(types).map(function(t){return'<span class="badge">'+t+'</span>';}).join('');
+  if(files.length)badges+='<span class="badge">'+files.length+' шт.</span>';
+  return'<div class="card" onclick="openAuthor(\''+a.id+'\')">'+av+
+    '<div class="card-name">'+esc(a.name)+'</div>'+
+    (a.description?'<div class="card-desc">'+esc(a.description)+'</div>':'')+
+    '<div class="badges">'+badges+'</div></div>';
+}
+
+function renderModal(){
+  var mid=null;
+  var keys=Object.keys(D.months);
+  for(var i=0;i<keys.length;i++){if(D.months[keys[i]].authors[S.aid]){mid=keys[i];break;}}
+  if(!mid)return'';
+  var a=D.months[mid].authors[S.aid];
+  var files=a.files||[];
+  var vids=[],auds=[],imgs=[],docs=[];
+  files.forEach(function(f){
+    var t=getType(f.url,f.type);
+    if(t=='youtube'||t=='video')vids.push(f);
+    else if(t=='audio')auds.push(f);
+    else if(t=='image')imgs.push(f);
+    else docs.push(f);
+  });
+  var av=a.avatar?
+    '<img src="'+esc(a.avatar)+'" class="modal-ava" onerror="this.style.display=\'none\'">':
+    '<div class="modal-ava-ph">'+esc((a.name||'А')[0])+'</div>';
+  var html='<div class="overlay" id="moverlay" onclick="overlayClick(event)">'+
+    '<div class="modal"><div class="modal-hdr">'+av+
+    '<div class="modal-name">'+esc(a.name)+'</div>'+
+    '<button class="btn-x" onclick="closeModal()">×</button></div>'+
+    '<div class="modal-body">';
+  if(a.description)html+='<div class="sec"><div class="sec-t">Об авторе</div><p class="modal-desc">'+esc(a.description)+'</p></div>';
+  if(vids.length){
+    html+='<div class="sec"><div class="sec-t">🎬 Видео</div><div class="vid-list">';
+    vids.forEach(function(f){html+=renderVideo(f);});
+    html+='</div></div>';
+  }
+  if(auds.length){
+    html+='<div class="sec"><div class="sec-t">🎵 Музыка и аудио</div><div class="aud-list">';
+    auds.forEach(function(f){html+=renderAudio(f);});
+    html+='</div></div>';
+  }
+  if(imgs.length){
+    html+='<div class="sec"><div class="sec-t">🖼️ Изображения</div><div class="img-gal">';
+    imgs.forEach(function(f){html+=renderImg(f);});
+    html+='</div></div>';
+  }
+  if(docs.length){
+    html+='<div class="sec"><div class="sec-t">📄 Документы и ссылки</div><div class="doc-list">';
+    docs.forEach(function(f){html+=renderDoc(f);});
+    html+='</div></div>';
+  }
+  if(!files.length)html+='<p style="color:#9A7A5A;font-style:italic;font-size:14px">Файлы ещё не добавлены.</p>';
+  html+='</div></div></div>';
+  return html;
+}
+
+function renderVideo(f){
+  var t=getType(f.url,f.type);
+  var cap=f.title?'<div class="vid-cap">'+esc(f.title)+'</div>':'';
+  var player='';
+  if(t=='youtube'){
+    var id=ytid(f.url);
+    if(id){
+      player='<iframe src="https://www.youtube.com/embed/'+id+'?rel=0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    }else{
+      player='<div style="padding:14px"><a href="'+esc(f.url)+'" target="_blank" style="color:#C8522A;font-family:Lora,serif">▶ Открыть YouTube</a></div>';
+    }
+  }else if(t=='video'){
+    player='<video controls preload="metadata"><source src="'+esc(f.url)+'"><p style="padding:16px;color:#aaa;text-align:center">Браузер не поддерживает этот формат.<br><a href="'+esc(f.url)+'" style="color:#C8522A">Скачать видео</a></p></video>';
+  }else{
+    player='<div style="padding:14px"><a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:#C8522A;font-family:Lora,serif">💾 '+esc(f.title||f.url)+'</a></div>';
+  }
+  return'<div class="vid-wrap">'+cap+player+'</div>';
+}
+
+function renderAudio(f){
+  var t=getType(f.url,f.type);
+  var player='';
+  if(t=='audio'){
+    player='<audio controls preload="metadata"><source src="'+esc(f.url)+'"><a href="'+esc(f.url)+'" style="color:#C8522A">Скачать</a></audio>';
+  }else{
+    player='<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:#C8522A;font-size:13px;font-family:Lora,serif">Открыть ↗</a>';
+  }
+  return'<div class="aud-card"><div class="aud-icon">🎵</div><div class="aud-info">'+
+    '<div class="aud-title">'+esc(f.title||decodeURIComponent(f.url.split('/').pop().split('?')[0])||'Аудио')+'</div>'+
+    player+'</div></div>';
+}
+
+function renderImg(f){
+  var safe=esc(f.url).replace(/'/g,'&#39;');
+  return'<img src="'+esc(f.url)+'" alt="'+esc(f.title||'')+'" loading="lazy" '+
+    'onclick="event.stopPropagation();openLb(\''+safe+'\')" '+
+    'onerror="this.parentNode&&this.parentNode.removeChild(this)">';
+}
+
+function renderDoc(f){
+  var t=getType(f.url,f.type);
+  var ic={pdf:'📄',document:'📝',gdrive:'📁',yandex:'💾',link:'🔗'};
+  return'<a href="'+esc(f.url)+'" target="_blank" rel="noopener" class="doc-link">'+
+    '<span class="doc-ic">'+(ic[t]||'📎')+'</span>'+
+    '<span class="doc-nm">'+esc(f.title||f.url)+'</span></a>';
+}
+
+// ---- LIGHTBOX ----
+function openLb(src){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lb').style.display='flex';
+}
+function closeLb(){
+  document.getElementById('lb').style.display='none';
+  document.getElementById('lb-img').src='';
+}
+
+// ---- ADMIN ----
+function renderAdmin(){
+  if(!S.authed)return renderAdmPw();
+  var tabs=['months','authors','files','settings'];
+  var tnames=['Месяцы','Авторы','Файлы','⚙'];
+  var tabBtns=tabs.map(function(t,i){
+    return'<button class="atab'+(S.atab==t?' on':'')+'" onclick="setAtab(\''+t+'\')">'+tnames[i]+'</button>';
+  }).join('');
+  return'<div class="drawer"><div class="dr-hdr"><span class="dr-title">⚙ Управление</span>'+
+    '<button class="btn-x" onclick="toggleAdm()">×</button></div>'+
+    '<div class="dr-body"><div id="adm-msg"></div>'+
+    '<div class="atabs">'+tabBtns+'</div>'+
+    '<div id="atab">'+renderTab()+'</div></div></div>';
+}
+
+function renderAdmPw(){
+  return'<div class="drawer"><div class="dr-hdr"><span class="dr-title">Управление</span>'+
+    '<button class="btn-x" onclick="toggleAdm()">×</button></div>'+
+    '<div class="dr-body" style="text-align:center;padding-top:40px">'+
+    '<p style="font-family:Playfair Display,serif;color:#C8522A;font-size:18px;margin-bottom:18px">Введите пароль</p>'+
+    '<input class="fi" id="pw" type="password" placeholder="Пароль" style="margin-bottom:8px" onkeydown="if(event.key==\'Enter\')checkPw()">'+
+    '<div id="pw-err"></div>'+
+    '<button class="bp" style="margin-top:8px" onclick="checkPw()">Войти</button>'+
+    '<p class="hint">По умолчанию: bchdt2025</p></div></div>';
+}
+
+function renderTab(){
+  if(S.atab=='months')return renderTabMonths();
+  if(S.atab=='authors')return renderTabAuthors();
+  if(S.atab=='files')return renderTabFiles();
+  return renderTabSettings();
+}
+
+function renderTabMonths(){
+  var ms=sortMonths();
+  var list=ms.map(function(m){
+    return'<div class="ali"><span class="ali-nm">'+esc(m.name)+' ('+Object.keys(m.authors||{}).length+' авт.)</span>'+
+      '<button class="bd" onclick="delMonth(\''+m.id+'\')">Удалить</button></div>';
+  }).join('');
+  var opts=Object.keys(MM).map(function(k){return'<option value="'+k+'">'+MM[k]+'</option>';}).join('');
+  return list+
+    '<div class="dvd"></div><p class="sec-h">+ Новый месяц</p>'+
+    '<div class="fl"><label>Месяц</label><select class="fs" id="nm-id" onchange="setNmName()">'+opts+'</select></div>'+
+    '<div class="fl"><label>Название</label><input class="fi" id="nm-name" value="Июнь"></div>'+
+    '<button class="bp" onclick="addMonth()">Добавить месяц</button>';
+}
+
+function setNmName(){
+  var id=gv('nm-id');
+  var el=document.getElementById('nm-name');
+  if(el&&MM[id])el.value=MM[id];
+}
+
+function renderTabAuthors(){
+  var ms=sortMonths();
+  var mid=S.amid||( ms.length?ms[0].id:'');
+  var au=mid?sortAuthors(mid):[];
+  var mopts=ms.map(function(m){return'<option value="'+m.id+'"'+(m.id==mid?' selected':'')+'>'+esc(m.name)+'</option>';}).join('');
+  var list=au.map(function(a){
+    return'<div class="ali"><span class="ali-nm">'+esc(a.name)+' ('+( a.files||[]).length+' файл.)</span>'+
+      '<button class="bd" onclick="delAuthor(\''+mid+'\',\''+a.id+'\')">Удалить</button></div>';
+  }).join('');
+  if(!au.length)list='<p style="color:#5A4A3A;font-size:12px;font-style:italic;margin-bottom:12px">Нет авторов</p>';
+  return'<div class="fl"><label>Месяц</label><select class="fs" id="a-mid" onchange="S.amid=this.value;refreshTab()">'+mopts+'</select></div>'+
+    list+
+    '<div class="dvd"></div><p class="sec-h">+ Добавить автора</p>'+
+    '<div class="fl"><label>Имя *</label><input class="fi" id="a-name" placeholder="Иван Иванов"></div>'+
+    '<div class="fl"><label>Описание</label><textarea class="fta" id="a-desc" placeholder="Биография..."></textarea></div>'+
+    '<div class="fl"><label>Фото (URL)</label><input class="fi" id="a-ava" placeholder="https://..."></div>'+
+    '<button class="bp" onclick="addAuthor()">Добавить автора</button>';
+}
+
+function renderTabFiles(){
+  var ms=sortMonths();
+  var mid=S.fmid||(ms.length?ms[0].id:'');
+  var au=mid?sortAuthors(mid):[];
+  var faid=S.faid||'';
+  var selA=faid&&D.months[mid]?D.months[mid].authors[faid]:null;
+  var mopts=ms.map(function(m){return'<option value="'+m.id+'"'+(m.id==mid?' selected':'')+'>'+esc(m.name)+'</option>';}).join('');
+  var aopts='<option value="">— выберите автора —</option>'+au.map(function(a){return'<option value="'+a.id+'"'+(a.id==faid?' selected':'')+'>'+esc(a.name)+'</option>';}).join('');
+  var curFiles='';
+  if(selA&&(selA.files||[]).length){
+    curFiles='<p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:Lora,serif">Файлы автора ('+selA.files.length+'):</p>'+
+      selA.files.map(function(f,i){
+        return'<div class="ali"><span class="ali-nm">'+esc((f.title||f.url).slice(0,44))+'</span>'+
+          '<button class="bd" onclick="delFile(\''+mid+'\',\''+faid+'\','+i+')">✕</button></div>';
+      }).join('');
+  }
+  var rows=renderFileRows();
+  return'<div class="fl"><label>Месяц</label><select class="fs" id="f-mid" onchange="S.fmid=this.value;S.faid=\'\';refreshTab()">'+mopts+'</select></div>'+
+    '<div class="fl"><label>Автор</label><select class="fs" id="f-aid" onchange="S.faid=this.value;refreshTab()">'+aopts+'</select></div>'+
+    (curFiles?'<div style="margin-bottom:12px">'+curFiles+'</div>':'')+
+    '<div class="dvd"></div><p class="sec-h">+ Добавить файлы</p>'+
+    '<div id="file-rows">'+rows+'</div>'+
+    '<button class="bp-add" onclick="addRow()">+ Ещё строка</button>'+
+    '<div class="dvd"></div>'+
+    '<p style="font-size:11px;color:#9A7A5A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:Lora,serif">Или вставьте несколько ссылок сразу:</p>'+
+    '<textarea class="fta" id="batch" style="min-height:80px" placeholder="Каждая ссылка на новой строке:&#10;https://youtube.com/watch?v=...&#10;https://example.com/song.mp3&#10;https://disk.yandex.ru/d/..."></textarea>'+
+    '<button class="bp" onclick="addFiles()">Добавить все файлы</button>'+
+    '<p class="hint">💡 Прямые ссылки на .mp3 .mp4 .jpg играют встроенно. YouTube — iframe-плеер. Яндекс Диск — открывается в новой вкладке.</p>';
+}
+
+function renderFileRows(){
+  return ROWS.map(function(row,i){
+    var topts=Object.keys(FT).map(function(k){return'<option value="'+k+'"'+(row.type==k?' selected':'')+'>'+FT[k]+'</option>';}).join('');
+    return'<div class="frow" id="frow-'+i+'">'+
+      '<button class="frow-x" onclick="removeRow('+i+')">×</button>'+
+      '<input class="fi" placeholder="URL: YouTube, MP3, MP4, JPG, PDF..." style="margin-bottom:6px;padding-right:26px" value="'+esc(row.url)+'" onchange="ROWS['+i+'].url=this.value">'+
+      '<input class="fi" placeholder="Название (необязательно)" style="margin-bottom:6px" value="'+esc(row.title)+'" onchange="ROWS['+i+'].title=this.value">'+
+      '<select class="fs" onchange="ROWS['+i+'].type=this.value">'+topts+'</select>'+
+      '</div>';
+  }).join('');
+}
+
+function renderTabSettings(){
+  return'<div class="fl"><label>Название сайта</label><input class="fi" id="s-title" value="'+esc(D.settings.title)+'"></div>'+
+    '<div class="fl"><label>Подзаголовок</label><input class="fi" id="s-sub" value="'+esc(D.settings.subtitle)+'"></div>'+
+    '<div class="fl"><label>Пароль</label><input class="fi" id="s-pw" type="text" value="'+esc(D.settings.pw)+'"></div>'+
+    '<button class="bp" onclick="saveSettings()">Сохранить</button>'+
+    '<div class="dvd"></div>'+
+    '<p class="hint">Резервная копия (консоль F12):<br><code style="color:#C8522A;font-size:10px">copy(localStorage.getItem(\'bchdt-v4\'))</code></p>';
+}
+
+// ---- ACTIONS ----
+function toggleAdm(){S.adm=!S.adm;render();}
+function setMonth(id){S.mid=id;render();}
+function setAtab(t){S.atab=t;render();}
+function openAuthor(id){S.aid=id;render();}
+function closeModal(){S.aid=null;render();}
+function overlayClick(e){if(e.target.id=='moverlay')closeModal();}
+function refreshTab(){var el=document.getElementById('atab');if(el)el.innerHTML=renderTab();}
+
+function admMsg(txt,err){
+  var el=document.getElementById('adm-msg');
+  if(!el)return;
+  el.innerHTML='<div class="'+(err?'emsg':'smsg')+'">'+esc(txt)+'</div>';
+  setTimeout(function(){if(el)el.innerHTML='';},3000);
+}
+
+function checkPw(){
+  var v=gv('pw');
+  if(v==D.settings.pw){S.authed=true;render();}
+  else{var el=document.getElementById('pw-err');if(el)el.innerHTML='<div class="emsg">Неверный пароль</div>';}
+}
+
+function addMonth(){
+  var id=gv('nm-id'),name=gv('nm-name')||MM[id]||id;
+  if(!id)return;
+  if(D.months[id]){admMsg('Уже существует',true);return;}
+  D.months[id]={id:id,name:name,order:Object.keys(D.months).length+1,authors:{}};
+  save();admMsg('Месяц добавлен!');render();
+}
+function delMonth(id){
+  if(!confirm('Удалить месяц "'+D.months[id].name+'"? Все авторы удалятся.'))return;
+  delete D.months[id];
+  if(S.mid==id){var ms=sortMonths();S.mid=ms.length?ms[0].id:null;}
+  save();render();
+}
+function addAuthor(){
+  var mid=gv('a-mid')||S.amid;
+  var name=gv('a-name').trim();
+  if(!name){admMsg('Введите имя',true);return;}
+  if(!D.months[mid]){admMsg('Выберите месяц',true);return;}
+  var id=uid();
+  D.months[mid].authors[id]={id:id,name:name,description:gv('a-desc').trim(),avatar:gv('a-ava').trim(),files:[],createdAt:Date.now()};
+  save();admMsg('Автор добавлен!');S.amid=mid;refreshTab();
+}
+function delAuthor(mid,aid){
+  if(!confirm('Удалить автора и все его файлы?'))return;
+  delete D.months[mid].authors[aid];
+  if(S.aid==aid)S.aid=null;
+  save();render();
+}
+
+function addRow(){
+  ROWS.push({url:'',title:'',type:'auto'});
+  var el=document.getElementById('file-rows');
+  if(el){
+    var i=ROWS.length-1;
+    var topts=Object.keys(FT).map(function(k){return'<option value="'+k+'">'+FT[k]+'</option>';}).join('');
+    var div=document.createElement('div');
+    div.className='frow';
+    div.id='frow-'+i;
+    div.innerHTML=
+      '<button class="frow-x" onclick="removeRow('+i+')">×</button>'+
+      '<input class="fi" placeholder="URL..." style="margin-bottom:6px;padding-right:26px" onchange="ROWS['+i+'].url=this.value">'+
+      '<input class="fi" placeholder="Название (необязательно)" style="margin-bottom:6px" onchange="ROWS['+i+'].title=this.value">'+
+      '<select class="fs" onchange="ROWS['+i+'].type=this.value">'+topts+'</select>';
+    el.appendChild(div);
+  }
+}
+function removeRow(i){
+  ROWS.splice(i,1);
+  if(!ROWS.length)ROWS=[{url:'',title:'',type:'auto'}];
+  refreshTab();
+}
+
+function addFiles(){
+  var mid=gv('f-mid')||S.fmid;
+  var faid=gv('f-aid')||S.faid;
+  if(!faid){admMsg('Выберите автора',true);return;}
+  if(!D.months[mid]||!D.months[mid].authors[faid]){admMsg('Автор не найден',true);return;}
+  var author=D.months[mid].authors[faid];
+  var added=0;
+  // from rows
+  ROWS.forEach(function(r){
+    var url=r.url.trim();
+    if(!url)return;
+    author.files.push({url:url,title:r.title.trim()||undefined,type:r.type=='auto'?undefined:r.type});
+    added++;
+  });
+  // from batch textarea
+  var batch=gv('batch');
+  if(batch){
+    batch.split('\n').forEach(function(line){
+      var url=line.trim();
+      if(!url)return;
+      author.files.push({url:url});
+      added++;
+    });
+  }
+  if(!added){admMsg('Нет ссылок',true);return;}
+  save();
+  ROWS=[{url:'',title:'',type:'auto'}];
+  admMsg('Добавлено: '+added+' файл.!');
+  S.fmid=mid;S.faid=faid;
+  refreshTab();
+}
+
+function delFile(mid,faid,idx){
+  D.months[mid].authors[faid].files.splice(idx,1);
+  save();S.fmid=mid;S.faid=faid;refreshTab();
+}
+function saveSettings(){
+  var t=gv('s-title'),sub=gv('s-sub'),pw=gv('s-pw');
+  if(t)D.settings.title=t;
+  if(sub)D.settings.subtitle=sub;
+  if(pw)D.settings.pw=pw;
+  save();admMsg('Сохранено!');render();
+}
+
+document.onkeydown=function(e){
+  if(e.key=='Escape'){
+    if(document.getElementById('lb').style.display!='none'){closeLb();}
+    else if(S.aid){closeModal();}
+    else if(S.adm){toggleAdm();}
+  }
+};
+
+load();
+render();
+</script>
+</body>
+</html>
